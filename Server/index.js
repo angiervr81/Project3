@@ -10,6 +10,7 @@ app.use(express.static('client'));
 
 //store user details in memory
 const users ={};
+const rooms ={}; // room messgae histories
 
 // handle new connections
 io.on('connection', (socket)=>{
@@ -21,6 +22,24 @@ io.on('connection', (socket)=>{
         console.log('${username} connected with socket ID:${socket.id}');
         io.emit('user list', Object.keys(users)); // updating list of users
     });
+
+// handle joing chat room
+socket.on('join room',(room) =>{
+    socket.join(room);
+    console.log('User ${socket.id} joined room ${room}');
+
+    if(room[room]){
+        socket.emit('chat history', rooms[room]);
+    }
+});
+
+//leaving room
+
+socket.on('leaving room',(room) =>{
+    socket.leave(room);
+    console.log('User ${socket.id} left room ${room}');
+});
+
 
     // handling sending a chat message 
     socket.on('chat message', (msg)=>{
