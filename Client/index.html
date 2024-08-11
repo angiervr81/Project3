@@ -8,10 +8,15 @@
 </head>
 <body>
      <div id = "chat-container">
-        <h2>Public Chat</h2>
-        <ul id="messages"></ul>
-        <form id= "form" action="">
-            <input id="input" autocomplete="off" placeholder="Type a message...">
+        <h2>Join a Room</h2>
+        <input id="room" autocomplete="off" placeholder="Room name...">
+        <button id="join-room">Join Chat</button>
+        <button id="leave-room">Leave Chat</button>
+
+        <h2>Chat Room</h2>
+        <ul id="room-messages"></ul>
+        <form id= "room-form" action="">
+            <input id="room-input" autocomplete="off" placeholder="Type a message...">
             <button>Send</button>
         </form>
         

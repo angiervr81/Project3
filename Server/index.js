@@ -41,7 +41,7 @@ socket.on('leaving room',(room) =>{
 });
 
 
-    // handling sending a chat message 
+    // handling sending a message to room
     socket.on('room message', (data)=>{
         const {room,message}=data;
 
