@@ -42,12 +42,16 @@ socket.on('leaving room',(room) =>{
 
 
     // handling sending a chat message 
-    socket.on('chat message', (msg)=>{
-        io.emit('chat message',msg);
-    });
+    socket.on('room message', (data)=>{
+        const {room,message}=data;
 
-    socket.on('disconnect',()=>{
-        console.log('User disconnected');
+        io.to(room).emit('room message',message );
+
+        if(!room[room]){
+            rooms[room] =[];
+        }
+
+        rooms[room].push(message);
     });
 
     // handling private messages 
