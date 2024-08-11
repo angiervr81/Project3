@@ -7,9 +7,9 @@ const joinRoomButton = document.getElementById('join-room');
 const leaveRoomButton = document.getElementById('leave-room');
 const roomInputElement = document.getElementById('room');
 const recipientInput = document.getElementById('recipient');
-const privateMessageInput = document.getElementById('private-message');
+const privateMessagesInput = document.getElementById('private-message');
 const sendPrivateButton = document.getElementById('send-private');
-const privateMessageDiv = document.getElementById('private-messages');
+const privateMessagesDiv = document.getElementById('private-messages');
 
 
 /*handlling public messages
@@ -52,6 +52,12 @@ roomForm.addEventListener('submit',(event) => {
     if(room && roomInput.value){
         socket.emt('room message',{room, message: roomInput.value});
        roomInput.value = '';
+    
+        
+        const item = document.createElement('li');
+        item.textContent ='Me:${message}';
+        roomMessages.appendChild(item);
+        roomMessages.scrollTop = roomMessages.scrollHeight;
     }
 });
 
@@ -60,7 +66,7 @@ socket.on('room message',(msg)=>{
     const item =document.createElement('li');
     item.textContent =msg;
     messages.appendChild(item);
-    messages.scrollTop = messages.scrollHeight;
+    roomMessages.scrollTop = roomMessages.scrollHeight;
 });
 
 //display history
@@ -71,15 +77,22 @@ socket.on('chat history',(hstory)=>{
         item.textContent = message;
         roomMessages.appendChild(item);
     });
+    roomMessages.scrollTop = roomMessages.scrollHeight;
 });
 
 sendPrivateButton.addEventListener('click',() =>{
     const recipient =recipientInput.value;
-    const message = privateMessageInput.value;
+    const message = privateMessagesInput.value;
 
     if(recipient && message){
         socket.emit('private message',{recipient,message});
-        privateMessageInput.value = '';
+        privateMessagesInput.value = '';
+
+        const item = document.createElement('li');
+        item.textContent ='Me to ${recipient}:${message}';
+        privateMessagesDiv.appendChild(item);
+        privateMessagesDiv.scrollTop =privateMessagesDiv.scrollHeight;
+
     }
 });
 //display private message
@@ -93,4 +106,5 @@ socket.on('private message',(data) =>{
     }
 
     privateMessageDiv.appendChild(item);
+    privateMessagesDiv.scrollTop = privateMessagesDiv.scrollHeight;
 });

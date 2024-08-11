@@ -45,13 +45,13 @@ socket.on('leaving room',(room) =>{
     socket.on('room message', (data)=>{
         const {room,message}=data;
 
-        io.to(room).emit('room message',message );
+        io.to(room).emit('room message',{message, sender:socket.id});
 
         if(!room[room]){
             rooms[room] =[];
         }
 
-        rooms[room].push(message);
+        rooms[room].push({message, sender:socket.io});
     });
 
     // handling private messages 

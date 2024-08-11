@@ -1,25 +1,53 @@
 body{
     font-family: Arial, sans-serif;
-    background-color: coral;
-    margin:0;
+    margin: 0;
     padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: coral;
+
 }
 
 #chat-container{
-    width: 300px;
-    margin: 50px;
-    padding: 20px;
+    width:90%;
+    max-width: 800px;
+    background: #ffffff;
+    border-radius: 1px solid #ddd;
     background-color: cadetblue;
-    border-radius: 10px;
+    padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-#messages li{
-    padding: 5px;
-    border-bottom: 1px soild #ddd;
+h2{
+    font-size: 1.5em;
+    margin-top: 0;
+    margin-bottom: 10px;
 }
 
-#form{
+/*#messages li{
+    padding: 5px;
+    border-bottom: 1px soild #ddd;
+}*/
+#join-room, #leave-room{
+    margin-top: 10px;
+    margin-bottom: 20px;
+
+}
+
+input#room, input#recipent, input#private-message{
+    width: calc(100%-22px) ;
+    padding: 10px;
+    margin-bottom: 10px ;
+    border: 1px solid #ccc;
+    border-radius: 4px ;
+    box-sizing: border-box ;
+
+}
+
+
+/*#form{
     display: flex;
     margin-top: 10px;
 }
@@ -29,15 +57,40 @@ body{
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
-}
+}*/
 
 button{
-    padding: 10px 20px;
+    padding: 10px 15px;
+    margin-right: 10px;
     border: none;
     background-color:azure;
     color:black;
-    border-radius: 5px;
+    border-radius: 4px;
     cursor: pointer;
+}
 
+button:hover{
+    background-color: darkgreen;
+}
+
+#room-meesage, #private-message{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 300px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: #fafafa;
+    margin-bottom: 20px;
+}
+#room-meesage li, #private-message div{
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
 
 }
+
+#room-meesage li:last-child, #private-message div:last-child{
+    border-bottom: none;
+}
+
