@@ -2,9 +2,9 @@
   "name": "project3",
   "version": "1.0.0",
   "description": "This project will alllow users to have chats with others publicly, private or in a room. All test were done on microsoft edge and chrome browsers.",
-  "main": "server.js",
+  "main": "./server/index.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node ./server/index.js"
   },
   "keywords": [],
   "author": "",
