@@ -1,0 +1,21 @@
+{
+  "name": "project3",
+  "version": "1.0.0",
+  "description": "This project will alllow users to have chats with others publicly, private or in a room. All test were done on microsoft edge and chrome browsers.",
+  "main": "./server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "nodemon server/index.js "
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2",
+    "moment": "^2.30.1",
+    "socket.io": "^4.7.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}
