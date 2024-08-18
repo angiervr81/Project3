@@ -1,54 +1,54 @@
-// server.js
+
 const http = require('http');
 const express = require('express');
-const socketIo = require('socket.io');
+const socketIO = require('socket.io');
 
 const app = express();
 const server = http.createServer(app);
-const io = socketIo(server);
+const io = socketIO(server);
 
-// Serve static files from the "public" directory
-app.use(express.static('public'));
+app.use(express.static('public')); // Assuming your client files are in a 'public' directory
 
-const PORT = process.env.PORT || 3000;
-
-let rooms = {};  // Object to hold room data
+let rooms = {};
 
 io.on('connection', (socket) => {
-    console.log('New client connected:', socket.id);
+    console.log('A user connected');
 
-    // Handle joining a room
-    socket.on('joinRoom', (room) => {
+    socket.on('join room', (room) => {
         socket.join(room);
-        if (!rooms[room]) rooms[room] = [];
-        io.to(room).emit('roomMessages', rooms[room]);
+        console.log(`User joined room: ${room}`);
+        if (!rooms[room]) {
+            rooms[room] = [];
+        }
+        socket.emit('chat history', rooms[room]);
     });
 
-    // Handle leaving a room
-    socket.on('leaveRoom', (room) => {
+    socket.on('leave room', (room) => {
         socket.leave(room);
+        console.log(`User left room: ${room}`);
     });
 
-    // Handle public message
-    socket.on('publicMessage', (data) => {
+    socket.on('room message', (data) => {
         const { room, message } = data;
-        rooms[room] = rooms[room] || [];
-        rooms[room].push(message);
-        io.to(room).emit('roomMessages', rooms[room]);
+        const formattedMessage = `User ${socket.id}: ${message}`;
+        if (rooms[room]) {
+            rooms[room].push(formattedMessage);
+        }
+        io.to(room).emit('room message', { sender: `User ${socket.id}`, message });
     });
 
-    // Handle private message
-    socket.on('privateMessage', (data) => {
+    socket.on('private message', (data) => {
         const { recipient, message } = data;
-        socket.to(recipient).emit('privateMessage', { from: socket.id, message });
+        // Here, you'd handle the private message logic, such as storing and forwarding messages
+        io.to(recipient).emit('private message', { sender: `User ${socket.id}`, message });
     });
 
-    // Handle client disconnection
     socket.on('disconnect', () => {
-        console.log('Client disconnected:', socket.id);
+        console.log('User disconnected');
     });
 });
 
+const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+    console.log(`Server running on port ${PORT}`);
 });
